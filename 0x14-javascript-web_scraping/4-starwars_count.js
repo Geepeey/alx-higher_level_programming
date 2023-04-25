@@ -11,7 +11,6 @@ function isWedgeAntillesPresent(movie) {
 request(apiUrl, (err, res, body) => {
   if (err) {
     console.error(err);
-    return;
   }
   const movies = JSON.parse(body).results;
   const moviesWithWedgeAntilles = movies.filter(isWedgeAntillesPresent);
