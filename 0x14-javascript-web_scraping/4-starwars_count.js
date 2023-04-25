@@ -1,22 +1,19 @@
 #!/usr/bin/node
+'use strict';
+
 const request = require('request');
+const apiUrl = process.argv[2];
 
-const url = process.argv[2];
+function isWedgeAntillesPresent(movie) {
+  return movie.characters.includes('https://swapi-api.alx-tools.com/api/people/18/');
+}
 
-request(url, function (error, response, body) {
-  if (error) {
-    console.log(error);
-  } else {
-    const films = JSON.parse(body).results;
-    let count = 0;
-
-    for (const film of films) {
-      const characters = film.characters;
-      if (characters.includes('https://swapi-api.alx-tools.com/api/people/18/')) {
-        count++;
-      }
-    }
-
-    console.log(count);
+request(apiUrl, (err, res, body) => {
+  if (err) {
+    console.error(err);
+    return;
   }
+  const movies = JSON.parse(body).results;
+  const moviesWithWedgeAntilles = movies.filter(isWedgeAntillesPresent);
+  console.log(moviesWithWedgeAntilles.length);
 });
