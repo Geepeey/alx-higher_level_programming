@@ -1,28 +1,27 @@
 #!/usr/bin/node
+'use strict';
 
 const request = require('request');
 const movieId = process.argv[2];
-
 const apiUrl = `https://swapi.dev/api/films/${movieId}/`;
 
 request(apiUrl, (error, response, body) => {
   if (error) {
-    console.error(error);
+    console.error(`Error: ${error}`);
     return;
   }
-  
-  const movieData = JSON.parse(body);
-  const characterUrls = movieData.characters;
-  
-  characterUrls.forEach((url) => {
+
+  const data = JSON.parse(body);
+
+  data.characters.forEach((url) => {
     request(url, (error, response, body) => {
       if (error) {
-        console.error(error);
+        console.error(`Error: ${error}`);
         return;
       }
-      
-      const characterData = JSON.parse(body);
-      console.log(characterData.name);
+
+      const character = JSON.parse(body);
+      console.log(character.name);
     });
   });
 });
