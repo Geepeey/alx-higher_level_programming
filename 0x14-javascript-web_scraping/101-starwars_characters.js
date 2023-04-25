@@ -1,10 +1,8 @@
 #!/usr/bin/node
 
 const request = require('request');
-
 const movieId = process.argv[2];
-const baseUrl = 'https://swapi.dev/api/films/';
-const url = `${baseUrl}${movieId}/`;
+const url = `https://swapi.dev/api/films/${movieId}/`;
 
 request(url, (error, response, body) => {
   if (error) {
@@ -13,6 +11,7 @@ request(url, (error, response, body) => {
   
     const movie = JSON.parse(body);
     const characters = movie.characters;
+  
     characters.forEach(characterUrl) {
       request(characterUrl, (error, response, body) => {
         if (error) {
