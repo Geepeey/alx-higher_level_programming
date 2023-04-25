@@ -1,11 +1,13 @@
 #!/usr/bin/node
+'use strict';
+
 const request = require('request');
-
 const movieId = process.argv[2];
+const apiUrl = `https://swapi.dev/api/films/${movieId}/`;
 
-request(`https://swapi.dev/api/films/${movieId}`, (error, response, body) => {
+request(apiUrl, (error, response, body) => {
   if (error) {
-    console.error(error);
+    console.error(`Error: ${error}`);
     return;
   }
 
